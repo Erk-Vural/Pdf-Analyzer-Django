@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pdf Analyzer | Login</title>
+</head>
+<body>
+
+<h2>Admin Login</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ admin_form.as_p }}
+    <input type="submit" value="Login" class="btn bg-dark text-light  p-1 me-4">
+</form>
+
+<h2>User Login</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    <input type="submit" value="Login" class="btn bg-dark text-light  p-1 me-4">
+</form>
+</body>
+</html>
