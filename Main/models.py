@@ -23,3 +23,14 @@ class User(models.Model):
     def __str__(self):
         return self.username
 
+
+class Document(models.Model):
+    class Meta:
+        db_table = "document"
+
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=32, blank=True)
+    document = models.FileField(upload_to='documents/')
+
+    def __str__(self):
+        return self.title

@@ -22,6 +22,6 @@ def login_user(form):
 
         for user in users:
             if user.username == username:
-                return True
+                return user.id
 
-    return False
+    return 0

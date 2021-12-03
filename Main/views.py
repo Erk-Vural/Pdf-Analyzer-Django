@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 
 from Main.forms import *
-from Main.models import *
 from Main.Services.login import *
 from Main.Services.admin_panel import *
+from Main.Services.user_panel import *
 
 
 # Create your views here.
@@ -22,8 +22,8 @@ def login_view(request):
         user_form = UserForm(request.POST)
         is_exist = login_user(user_form)
 
-        if is_exist:
-            return redirect('user-panel')
+        if is_exist != 0:
+            return redirect('user-panel', is_exist)
 
     user_form = UserForm()
 
@@ -83,8 +83,26 @@ def user_update_view(request, pk):
     return render(request, "user-create.html", context)
 
 
-def user_panel_view(request):
+def user_panel_view(request, pk):
+
     context = {
+        'user_id': pk
     }
 
     return render(request, "user-panel.html", context)
+
+
+def document_create_view(request, pk):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        create_document(form, pk)
+
+        return redirect('user-panel', pk)
+
+    form = DocumentForm()
+
+    context = {
+        'pdf_form': form
+    }
+
+    return render(request, "document-create.html", context)
