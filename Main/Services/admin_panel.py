@@ -29,5 +29,6 @@ def update_user(form, pk):
 
 
 def delete_user(pk):
-    user = User.objects.get(id=pk)
-    return user
+    user = read_user(pk)
+
+    user.delete()

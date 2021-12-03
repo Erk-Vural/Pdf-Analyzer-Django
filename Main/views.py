@@ -45,6 +45,44 @@ def admin_panel_view(request):
     return render(request, "admin-panel.html", context)
 
 
+def user_create_view(request):
+    if request.method == 'POST':
+        user_form = UserForm(request.POST)
+        create_user(user_form)
+
+        return redirect('admin-panel')
+
+    user_form = UserForm()
+
+    context = {
+        'user_form': user_form
+    }
+
+    return render(request, "user-create.html", context)
+
+
+def user_delete_view(request, pk):
+    delete_user(pk)
+
+    return redirect('admin-panel')
+
+
+def user_update_view(request, pk):
+    if request.method == 'POST':
+        user_form = UserForm(request.POST)
+        update_user(user_form, pk)
+
+        return redirect('admin-panel')
+
+    user_form = UserForm()
+
+    context = {
+        'user_form': user_form
+    }
+
+    return render(request, "user-create.html", context)
+
+
 def user_panel_view(request):
     context = {
     }

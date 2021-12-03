@@ -9,12 +9,14 @@
 <div>
     <h2>User List</h2>
 
-    <a>Create</a>
+    <a href="user/create">Create</a>
 
     {% for user in users %}
 
         <div>
             <a>{{ user.username }}</a>
+            <a href="{% url 'user-delete' user.id %}">Delete</a>
+            <a href="{% url 'user-update' user.id %}">Update</a>
         </div>
 
     {% endfor %}
