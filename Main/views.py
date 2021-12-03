@@ -3,28 +3,26 @@ from django.shortcuts import render, redirect
 from Main.forms import *
 from Main.models import *
 from Main.Services.login import *
+from Main.Services.admin_panel import *
 
 
 # Create your views here.
 
 def login_view(request):
-    is_admin_exist = False
-
     if request.method == 'POST':
         admin_form = AdminForm(request.POST)
-        is_admin_exist = login_admin(admin_form)
+        is_exist = login_admin(admin_form)
 
-        if is_admin_exist:
+        if is_exist:
             return redirect('admin-panel')
 
     admin_form = AdminForm()
 
-    is_user_exist = False
     if request.method == 'POST':
         user_form = UserForm(request.POST)
-        is_user_exist = login_user(user_form)
+        is_exist = login_user(user_form)
 
-        if is_user_exist:
+        if is_exist:
             return redirect('user-panel')
 
     user_form = UserForm()
@@ -38,7 +36,10 @@ def login_view(request):
 
 
 def admin_panel_view(request):
+    users = read_all_user()
+
     context = {
+        'users': users,
     }
 
     return render(request, "admin-panel.html", context)

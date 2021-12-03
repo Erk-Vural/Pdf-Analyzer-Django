@@ -1,4 +1,3 @@
-from Main.forms import *
 from Main.models import *
 
 
@@ -26,10 +25,3 @@ def login_user(form):
                 return True
 
     return False
-
-
-def save_user_form(form, user):
-    if form.is_valid():
-        user.username = form['username'].value()
-
-        user.save()

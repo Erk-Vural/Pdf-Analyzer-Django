@@ -6,7 +6,22 @@
 </head>
 <body>
 
-<h2>Admin Panel</h2>
+<div>
+    <h2>User List</h2>
+
+    <a>Create</a>
+
+    {% for user in users %}
+
+        <div>
+            <a>{{ user.username }}</a>
+        </div>
+
+    {% endfor %}
+
+
+</div>
+
 
 </body>
 </html>
