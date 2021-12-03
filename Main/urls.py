@@ -15,5 +15,6 @@ urlpatterns = [
     # User panel urls
     path('user-panel/<int:pk>', user_panel_view, name='user-panel'),
     path('document/create/<int:pk>', document_create_view, name='document-create'),
+    path('document/delete/<int:tk>/<int:pk>', document_delete_view, name='document-delete'),
 
 ]

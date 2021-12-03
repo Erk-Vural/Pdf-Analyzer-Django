@@ -84,9 +84,11 @@ def user_update_view(request, pk):
 
 
 def user_panel_view(request, pk):
+    documents = read_all_documents_by_user(pk)
 
     context = {
-        'user_id': pk
+        'user_id': pk,
+        'documents': documents
     }
 
     return render(request, "user-panel.html", context)
@@ -106,3 +108,9 @@ def document_create_view(request, pk):
     }
 
     return render(request, "document-create.html", context)
+
+
+def document_delete_view(request, tk, pk):
+    delete_document(pk)
+
+    return redirect('user-panel', tk)

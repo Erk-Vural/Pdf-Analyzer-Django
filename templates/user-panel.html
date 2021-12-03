@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +10,18 @@
 
 <h2>User Panel</h2>
 
-<a href="{% url 'document-create' user_id %}">Upload PDF</a>
+<a href="{% url 'document-create' user_id %}">Upload Document(Pdf)</a>
+
+{% for document in documents %}
+
+    <div>
+        <a>{{ document.title }}</a>
+        <a href="{% url 'document-delete' user_id document.id %}">Delete</a>
+
+        <p>Document: {{ document.document }}</p>
+    </div>
+
+{% endfor %}
 
 </body>
 </html>
