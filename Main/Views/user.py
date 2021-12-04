@@ -2,7 +2,19 @@ from django.shortcuts import redirect, render
 
 from Main.Services.document import read_all_documents_by_user
 from Main.Services.user import create_user, delete_user, update_user
+from Main.document_analyzer import read_text
 from Main.forms import UserForm
+
+
+def user_panel_view(request, pk):
+    documents = read_all_documents_by_user(pk)
+
+    context = {
+        'user_id': pk,
+        'documents': documents
+    }
+
+    return render(request, "user-panel.html", context)
 
 
 def user_create_view(request):
@@ -41,14 +53,3 @@ def user_update_view(request, pk):
     }
 
     return render(request, "user-create.html", context)
-
-
-def user_panel_view(request, pk):
-    documents = read_all_documents_by_user(pk)
-
-    context = {
-        'user_id': pk,
-        'documents': documents
-    }
-
-    return render(request, "user-panel.html", context)
