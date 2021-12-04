@@ -2,7 +2,6 @@ from django.shortcuts import redirect, render
 
 from Main.Services.document import read_all_documents_by_user
 from Main.Services.user import create_user, delete_user, update_user
-from Main.document_analyzer import read_text
 from Main.forms import UserForm
 
 

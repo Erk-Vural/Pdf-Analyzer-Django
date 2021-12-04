@@ -1,7 +1,6 @@
 from django.shortcuts import redirect, render
 
 from Main.Services.document import delete_document, create_document
-from Main.document_analyzer import read_text
 from Main.forms import DocumentForm
 
 

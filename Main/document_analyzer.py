@@ -1,47 +1,36 @@
-# importing required modules
-import PyPDF2
+# -*- coding: utf-8 -*-
 
-# Import libraries
-from PIL import Image
 import pytesseract
-import sys
+from PIL import Image
 from pdf2image import convert_from_path
-import os
 
+from pdfminer import high_level
 
-# Path of the pdf
-PDF_file = '../static/Main/documents/example-2.pdf'
+# Path of tesseract
+
+pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'  # your path may be different
+
+extracted_text = ""
 
 
 def read_text():
-    # creating a pdf file object
-    pdfFileObj = open(PDF_file, 'rb')
+    global extracted_text
 
-    # creating a pdf reader object
-    pdfReader = PyPDF2.PdfFileReader(pdfFileObj)
+    local_pdf_filename = '../static/Main/documents/example-2.pdf'
+    pages = [0, 1]
 
-    # printing number of pages in pdf file
-    print(pdfReader.numPages)
+    extracted_text = high_level.extract_text(local_pdf_filename, "", pages)
 
-    # creating a page object
-    pageObj = pdfReader.getPage(0)
-
-    # extracting text from page
-    pageText = pageObj.extractText()
-
-    print(pageText)
-
-    # closing the pdf file object
-    pdfFileObj.close()
+    if extracted_text == "":
+        read_image()
 
 
 def read_image():
-    '''
-    Part #1 : Converting PDF to images
-    '''
+    # Part 1 - Save all pages from pdf as jpg
 
     # Store all the pages of the PDF in a variable
-    pages = convert_from_path(PDF_file, 100, poppler_path=r'C:\Program Files\poppler-0.68.0\bin')
+    pages = convert_from_path('../static/Main/documents/example-2.pdf', 100,
+                              poppler_path=r'C:\Program Files\poppler-0.68.0\bin')
 
     # Counter to store images of each page of PDF to image
     image_counter = 1
@@ -49,12 +38,6 @@ def read_image():
     # Iterate through all the pages stored above
     for page in pages:
         # Declaring filename for each page of PDF as JPG
-        # For each page, filename will be:
-        # PDF page 1 -> page_1.jpg
-        # PDF page 2 -> page_2.jpg
-        # PDF page 3 -> page_3.jpg
-        # ....
-        # PDF page n -> page_n.jpg
         filename = "page_" + str(image_counter) + ".jpg"
 
         # Save the image of the page in system
@@ -63,13 +46,10 @@ def read_image():
         # Increment the counter to update filename
         image_counter = image_counter + 1
 
-    '''
-    Part #2 - Recognizing text from the images using OCR
-    '''
-    3
+    # Part 2 - Recognizing text from the images using OCR
 
     # Variable to get count of total number of pages
-    filelimit = image_counter - 1
+    file_limit = image_counter - 1
 
     # Creating a text file to write the output
     outfile = "out_text.txt"
@@ -79,27 +59,12 @@ def read_image():
     f = open(outfile, "a")
 
     # Iterate from 1 to total number of pages
-    for i in range(1, filelimit + 1):
-        # Set filename to recognize text from
-        # Again, these files will be:
-        # page_1.jpg
-        # page_2.jpg
-        # ....
-        # page_n.jpg
+    for i in range(1, file_limit + 1):
         filename = "page_" + str(i) + ".jpg"
 
-        # Recognize the text as string in image using pytesserct
+        # Recognize the text as string in image using pytesseract
         text = str((pytesseract.image_to_string(Image.open(filename))))
 
-        # The recognized text is stored in variable text
-        # Any string processing may be applied on text
-        # Here, basic formatting has been done:
-        # In many PDFs, at line ending, if a word can't
-        # be written fully, a 'hyphen' is added.
-        # The rest of the word is written in the next line
-        # Eg: This is a sample text this word here GeeksF-
-        # orGeeks is half on first line, remaining on next.
-        # To remove this, we replace every '-\n' to ''.
         text = text.replace('-\n', '')
 
         # Finally, write the processed text to the file.
@@ -110,7 +75,4 @@ def read_image():
 
 
 if __name__ == "__main__":
-    pass
-    # read_text()
-    # read_image()
-
+    read_text()
