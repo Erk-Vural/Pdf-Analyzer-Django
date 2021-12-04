@@ -11,5 +11,4 @@ class UserForm(forms.Form):
 
 
 class DocumentForm(forms.Form):
-    title = forms.CharField(label="Title", required="false")
     document = forms.FileField(label='Document', required="false")
