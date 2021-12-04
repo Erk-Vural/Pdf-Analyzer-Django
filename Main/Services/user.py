@@ -1,4 +1,17 @@
-from Main.models import *
+from Main.Models.User import User
+
+
+def login_user(form):
+    users = User.objects.all()
+
+    if form.is_valid():
+        username = form['username'].value()
+
+        for user in users:
+            if user.username == username:
+                return user.id
+
+    return 0
 
 
 def create_user(form):

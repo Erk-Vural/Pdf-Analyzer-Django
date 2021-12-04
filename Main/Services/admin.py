@@ -1,4 +1,4 @@
-from Main.models import *
+from Main.Models.Admin import Admin
 
 
 def login_admin(form):
@@ -12,16 +12,3 @@ def login_admin(form):
             if admin.username == username and admin.password == password:
                 return True
     return False
-
-
-def login_user(form):
-    users = User.objects.all()
-
-    if form.is_valid():
-        username = form['username'].value()
-
-        for user in users:
-            if user.username == username:
-                return user.id
-
-    return 0

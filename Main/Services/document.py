@@ -1,4 +1,5 @@
-from Main.models import *
+from Main.Models.Document import Document
+from Main.Models.User import User
 
 
 def create_document(form, pk):

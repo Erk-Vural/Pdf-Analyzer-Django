@@ -1,7 +1,4 @@
 from django import forms
-from django.forms import ModelForm
-
-from Main.models import Document
 
 
 class AdminForm(forms.Form):
