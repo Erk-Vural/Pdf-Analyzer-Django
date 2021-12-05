@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os.path
 
 import pytesseract
 from PIL import Image
@@ -6,17 +7,34 @@ from pdf2image import convert_from_path
 
 from pdfminer import high_level
 
+from Main.Services.document import *
+
 # Path of tesseract
 pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'  # your path may be different
 
+filename = ""
+user_id = 0
+
+course_name = ""
+title = ""
+
+staff_info_block = ["", "", ""]
+
+semester = ""
+
+authors_info_block = ["", "", ""]
+
+summary = ""
+
+keywords = []
+
+BASE = os.path.dirname(os.path.abspath(__file__))
+
 
 def read_text(pages):
-    local_pdf_filename = '../static/Main/documents/example-2.pdf'
+    local_pdf_filename = '../static/Main/documents/' + filename
 
-    extracted_text = high_level.extract_text(local_pdf_filename, "", pages)
-
-    if extracted_text == "":
-        read_image()
+    extracted_text = high_level.extract_text(os.path.join(BASE, local_pdf_filename), "", pages)
 
     return extracted_text
 
@@ -70,24 +88,6 @@ def read_image():
     f.close()
 
 
-course_name = ""
-title = ""
-
-staff_info_block = ""
-staff_1 = ""
-staff_2 = ""
-staff_3 = ""
-staff_info = [["", "", "", ""], ["", "", "", ""], ["", "", "", ""]]
-
-semester = ""
-
-authors_info_block = ["", "", ""]
-
-summary = ""
-
-keywords = []
-
-
 def read_course_name():
     global course_name
 
@@ -100,7 +100,7 @@ def read_course_name():
     elif extracted_text.find('ARAŞTIRMA PROBLEMLERİ') != -1:
         course_name = 'ARAŞTIRMA PROBLEMLERİ'
 
-    # create_course_name(4, result)
+    create_course_name(user_id, course_name)
 
 
 def read_title():
@@ -119,20 +119,10 @@ def read_title():
 
     title = title_area[start_point: end_point]
 
-    # create_title(4, result)
+    create_title(user_id, title)
 
 
 def read_staff():
-    read_block()
-    find_staff()
-    parse_staff_info(staff_1, 0)
-    parse_staff_info(staff_2, 1)
-    parse_staff_info(staff_3, 2)
-    save_staff_info()
-
-
-def read_block():
-    global staff_info_block
     pages = [1]
 
     extracted_text = read_text(pages)
@@ -149,15 +139,7 @@ def read_block():
 
     start_point = extracted_text.find(temp) + len(title) + 4
 
-    staff_info_block = extracted_text[start_point:]
-
-
-def find_staff():
-    global staff_1
-    global staff_2
-    global staff_3
-
-    info = staff_info_block
+    info = extracted_text[start_point:]
 
     info = info.replace("...", "")
     info = info.replace("..", "")
@@ -166,56 +148,45 @@ def find_staff():
     info = info[:end_point]
 
     end_point = info.find(",")
-    staff_1 = info[:end_point]
+    staff_info_block[0] = info[:end_point]
     info = info[end_point + 4:]
 
     end_point = info.find(",")
-    staff_2 = info[3:end_point]
+    staff_info_block[1] = info[3:end_point]
     info = info[end_point + 4:]
 
-    end_point = info.find(",")
-    staff_3 = info
+    staff_info_block[2] = info
 
-
-def parse_staff_info(person, person_index):
-    title_str = ""
-    name_str = ""
-    last_name_str = ""
-    duty_str = ""
-
-    while person.find(".") != -1:
-        point = person.find(".")
-        title_str = title_str + person[:point]
-        person = person[point + 1:]
-
-    if person.find("Danışman") != -1:
-        point = person.find("Danışman")
-        person = person[:point]
-        duty_str = "Danışman"
-
-    elif person.find("Jüri") != -1:
-        point = person.find("Jüri Üyesi")
-        person = person[:point - 1]
-        duty_str = "Jüri Üyesi"
-
-    person = person[1:]
-
-    point = person.find(" ")
-    name_str = person[:point]
-    last_name_str = person[point + 1:]
-
-    staff_info[person_index][0] = title_str
-    staff_info[person_index][1] = name_str
-    staff_info[person_index][2] = last_name_str
-    staff_info[person_index][3] = duty_str
-
-
-def save_staff_info():
     for i in range(3):
-        if staff_info[i][3] == "Danışman":
-            pass
-            # create_mentor_info(4, persons_info[i][1], persons_info[i][2], persons_info[i][0])
-        # create_jury_info(4, persons_info[i][1], persons_info[i][2], persons_info[i][0])
+        title_str = ""
+        name_str = ""
+        last_name_str = ""
+        duty_str = ""
+
+        while staff_info_block[i].find(".") != -1:
+            point = staff_info_block[i].find(".")
+            title_str = title_str + staff_info_block[i][:point]
+            staff_info_block[i] = staff_info_block[i][point + 1:]
+
+        if staff_info_block[i].find("Danışman") != -1:
+            point = staff_info_block[i].find("Danışman")
+            staff_info_block[i] = staff_info_block[i][:point]
+            duty_str = "Danışman"
+
+        elif staff_info_block[i].find("Jüri") != -1:
+            point = staff_info_block[i].find("Jüri Üyesi")
+            staff_info_block[i] = staff_info_block[i][:point - 1]
+            duty_str = "Jüri Üyesi"
+
+        staff_info_block[i] = staff_info_block[i][1:]
+
+        point = staff_info_block[i].find(" ")
+        name_str = staff_info_block[i][:point]
+        last_name_str = staff_info_block[i][point + 1:]
+
+        if duty_str == "Danışman":
+            create_mentor_info(user_id, name_str, last_name_str, title_str)
+        create_jury_info(user_id, name_str, last_name_str, title_str)
 
 
 def read_semester():
@@ -236,7 +207,7 @@ def read_semester():
     else:
         semester = str(year) + "-" + str(year + 1) + " Güz"
 
-    # create_semester(4, semester)
+    create_semester(user_id, semester)
 
 
 def read_author():
@@ -266,10 +237,7 @@ def read_author():
             name = name_last_name[0:point]
             last_name = name_last_name[point:]
 
-            # create_author(4, name, last_name, student_num, "1")
-
-        else:
-            continue
+            create_author(user_id, name, last_name, student_num, "1")
 
 
 def read_summary():
@@ -282,11 +250,12 @@ def read_summary():
     end_point = extracted_text.find("Anahtar") - 2
     summary = extracted_text[start_point:end_point]
 
-    # create_summary(4, summary)
+    create_summary(user_id, summary)
 
 
 def read_keywords():
     global keywords
+    # range is wider for decrease missing wanted part of data
     pages = [6, 7, 8, 9, 10, 11]
 
     extracted_text = read_text(pages)
@@ -297,11 +266,12 @@ def read_keywords():
 
     while keywords_str.find(",") != -1:
         point = keywords_str.find(",") + 2
-        keyword = keywords_str[:point-3]
+        keyword = keywords_str[:point - 3]
         keywords_str = keywords_str[point:]
 
         keywords.append(keyword)
 
+    # Get last keyword
     if keywords_str.find(",") == -1:
         point = keywords_str.find(" ")
         keyword = keywords_str[:point]
@@ -309,11 +279,16 @@ def read_keywords():
         keywords.append(keyword)
 
     for i in range(len(keywords)):
-        pass
-        # create_keyword(4, keywords[i])
+        create_keyword(user_id, keywords[i])
 
 
-if __name__ == "__main__":
+def analyze_document(fl, pk):
+    global filename
+    global user_id
+
+    filename = fl
+    user_id = pk
+
     read_course_name()
     read_title()
     read_staff()
@@ -321,3 +296,7 @@ if __name__ == "__main__":
     read_author()
     read_summary()
     read_keywords()
+
+
+if __name__ == "__main__":
+    analyze_document('document/example-2.pdf', 4)

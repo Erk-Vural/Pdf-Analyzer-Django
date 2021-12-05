@@ -1,3 +1,5 @@
+import os
+
 from Main.Models.Document import *
 from Main.Models.User import User
 
@@ -10,6 +12,16 @@ def create_course_name(pk, content):
     course_name.content = content
 
     course_name.save()
+
+
+def create_title(pk, content):
+    title = Title()
+    user = User.objects.get(id=pk)
+
+    title.user_id = user
+    title.content = content
+
+    title.save()
 
 
 def create_mentor_info(pk, name, last_name, title):
