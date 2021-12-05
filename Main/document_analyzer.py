@@ -17,15 +17,10 @@ user_id = 0
 
 course_name = ""
 title = ""
-
 staff_info_block = ["", "", ""]
-
 semester = ""
-
 authors_info_block = ["", "", ""]
-
 summary = ""
-
 keywords = []
 
 BASE = os.path.dirname(os.path.abspath(__file__))
@@ -109,15 +104,14 @@ def read_title():
 
     extracted_text = read_text(pages)
 
+    # add 4 to avoid new lines
     start_point = extracted_text.find(course_name) + len(course_name) + 4
-    end_point = start_point + 64
 
-    title_area = extracted_text[start_point: end_point]
+    block = extracted_text[start_point:]
 
-    start_point = 0
-    end_point = title_area.find("   ")
+    end_point = block.find("\n")
 
-    title = title_area[start_point: end_point]
+    title = block[: end_point]
 
     create_title(user_id, title)
 
@@ -127,35 +121,30 @@ def read_staff():
 
     extracted_text = read_text(pages)
 
-    start_point = extracted_text.find(title) + len(title) + 4
-    end_point = start_point + 64
+    start_point = extracted_text.find(title) + len(title) + 2
 
-    temp_area = extracted_text[start_point: end_point]
+    block = extracted_text[start_point:]
 
-    start_point = 0
-    end_point = temp_area.find("   ")
+    start_point = block.find("\n") + 2
 
-    temp = temp_area[start_point: end_point]
+    block = block[start_point:]
 
-    start_point = extracted_text.find(temp) + len(title) + 4
+    block = block.replace("\n", "  ")
+    block = block.replace("...", "")
+    block = block.replace("..", "")
+    block = block.replace("Kocaeli Üniv.", "")
+    end_point = block.find("Tezin") - 5
+    block = block[:end_point]
 
-    info = extracted_text[start_point:]
+    end_point = block.find(",")
+    staff_info_block[0] = block[:end_point]
+    block = block[end_point + 4:]
 
-    info = info.replace("...", "")
-    info = info.replace("..", "")
-    info = info.replace("Kocaeli Üniv.", "")
-    end_point = info.find("Tezin") - 5
-    info = info[:end_point]
+    end_point = block.find(",")
+    staff_info_block[1] = block[3:end_point]
+    block = block[end_point + 4:]
 
-    end_point = info.find(",")
-    staff_info_block[0] = info[:end_point]
-    info = info[end_point + 4:]
-
-    end_point = info.find(",")
-    staff_info_block[1] = info[3:end_point]
-    info = info[end_point + 4:]
-
-    staff_info_block[2] = info
+    staff_info_block[2] = block
 
     for i in range(3):
         title_str = ""
@@ -185,6 +174,7 @@ def read_staff():
         last_name_str = staff_info_block[i][point + 1:]
 
         if duty_str == "Danışman":
+            pass
             create_mentor_info(user_id, name_str, last_name_str, title_str)
         create_jury_info(user_id, name_str, last_name_str, title_str)
 
@@ -232,6 +222,7 @@ def read_author():
             start_point = authors_info_block[i].find("Soyadı:") + 8
             end_point = authors_info_block[i].find("İmza")
             name_last_name = authors_info_block[i][start_point:end_point]
+            name_last_name = name_last_name.replace("\n", "")
 
             point = name_last_name.find(" ")
             name = name_last_name[0:point]
@@ -247,8 +238,9 @@ def read_summary():
     extracted_text = read_text(pages)
 
     start_point = extracted_text.find("ÖZET") + 4
-    end_point = extracted_text.find("Anahtar") - 2
-    summary = extracted_text[start_point:end_point]
+    end_point = extracted_text.find("Anahtar Kelimeler:") - 2
+    extracted_text = extracted_text[start_point:end_point]
+    summary = extracted_text.replace("\n", " ")
 
     create_summary(user_id, summary)
 
@@ -261,8 +253,9 @@ def read_keywords():
     extracted_text = read_text(pages)
 
     start_point = extracted_text.find("Anahtar Kelimeler:") + 19
-    end_point = extracted_text.find("ABSTRACT")
-    keywords_str = extracted_text[start_point:end_point]
+    extracted_text = extracted_text[start_point:]
+    end_point = extracted_text.find("\n")
+    keywords_str = extracted_text[:end_point]
 
     while keywords_str.find(",") != -1:
         point = keywords_str.find(",") + 2
@@ -273,12 +266,12 @@ def read_keywords():
 
     # Get last keyword
     if keywords_str.find(",") == -1:
-        point = keywords_str.find(" ")
-        keyword = keywords_str[:point]
+        keyword = keywords_str
 
         keywords.append(keyword)
 
     for i in range(len(keywords)):
+        pass
         create_keyword(user_id, keywords[i])
 
 
