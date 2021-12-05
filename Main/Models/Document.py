@@ -83,9 +83,9 @@ class Keywords(models.Model):
         return self.content
 
 
-class AssistantInfo(models.Model):
+class MentorInfo(models.Model):
     class Meta:
-        db_table = "AssistantInfo"
+        db_table = "MentorInfo"
 
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=32)

@@ -7,22 +7,18 @@ from pdf2image import convert_from_path
 from pdfminer import high_level
 
 # Path of tesseract
-
 pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'  # your path may be different
 
-extracted_text = ""
 
-
-def read_text():
-    global extracted_text
-
+def read_text(pages):
     local_pdf_filename = '../static/Main/documents/example-2.pdf'
-    pages = [0, 1]
 
     extracted_text = high_level.extract_text(local_pdf_filename, "", pages)
 
     if extracted_text == "":
         read_image()
+
+    return extracted_text
 
 
 def read_image():
@@ -74,5 +70,176 @@ def read_image():
     f.close()
 
 
+course_name = ""
+title = ""
+
+block = ""
+person_1 = ""
+person_2 = ""
+person_3 = ""
+persons_info = [["", "", "", ""], ["", "", "", ""], ["", "", "", ""]]
+
+semester = ""
+
+
+def read_course_name():
+    global course_name
+
+    pages = [1]
+    extracted_text = read_text(pages)
+
+    if extracted_text.find('BİTİRME ÇALIŞMASI') != -1:
+        course_name = 'BİTİRME ÇALIŞMASI'
+
+    elif extracted_text.find('ARAŞTIRMA PROBLEMLERİ') != -1:
+        course_name = 'ARAŞTIRMA PROBLEMLERİ'
+
+    # create_course_name(4, result)
+
+
+def read_title():
+    global title
+    pages = [1]
+
+    extracted_text = read_text(pages)
+
+    start_point = extracted_text.find(course_name) + len(course_name) + 4
+    end_point = start_point + 64
+
+    title_area = extracted_text[start_point: end_point]
+
+    start_point = 0
+    end_point = title_area.find("   ")
+
+    title = title_area[start_point: end_point]
+
+    # create_title(4, result)
+
+
+def read_persons():
+    read_block()
+    find_persons()
+    parse_persons_info(person_1, 0)
+    parse_persons_info(person_2, 1)
+    parse_persons_info(person_3, 2)
+    save_persons_info()
+
+
+def read_block():
+    global block
+    pages = [1]
+
+    extracted_text = read_text(pages)
+
+    start_point = extracted_text.find(title) + len(title) + 4
+    end_point = start_point + 64
+
+    temp_area = extracted_text[start_point: end_point]
+
+    start_point = 0
+    end_point = temp_area.find("   ")
+
+    temp = temp_area[start_point: end_point]
+
+    start_point = extracted_text.find(temp) + len(title) + 4
+
+    block = extracted_text[start_point:]
+
+
+def find_persons():
+    global person_1
+    global person_2
+    global person_3
+
+    info = block
+
+    info = info.replace("...", "")
+    info = info.replace("..", "")
+    info = info.replace("Kocaeli Üniv.", "")
+    end_point = info.find("Tezin") - 5
+    info = info[:end_point]
+
+    end_point = info.find(",")
+    person_1 = info[:end_point]
+    info = info[end_point + 4:]
+
+    end_point = info.find(",")
+    person_2 = info[3:end_point]
+    info = info[end_point + 4:]
+
+    end_point = info.find(",")
+    person_3 = info
+
+
+def parse_persons_info(person, person_index):
+    title_str = ""
+    name_str = ""
+    last_name_str = ""
+    duty_str = ""
+
+    while person.find(".") != -1:
+        point = person.find(".")
+        title_str = title_str + person[:point]
+        person = person[point + 1:]
+
+    if person.find("Danışman") != -1:
+        point = person.find("Danışman")
+        person = person[:point]
+        duty_str = "Danışman"
+
+    elif person.find("Jüri") != -1:
+        point = person.find("Jüri Üyesi")
+        person = person[:point - 1]
+        duty_str = "Jüri Üyesi"
+
+    person = person[1:]
+
+    point = person.find(" ")
+    name_str = person[:point]
+    last_name_str = person[point + 1:]
+
+    persons_info[person_index][0] = title_str
+    persons_info[person_index][1] = name_str
+    persons_info[person_index][2] = last_name_str
+    persons_info[person_index][3] = duty_str
+
+
+def save_persons_info():
+    for i in range(3):
+        if persons_info[i][3] == "Danışman":
+            pass
+            # create_mentor_info(4, persons_info[i][1], persons_info[i][2], persons_info[i][0])
+        # create_jury_info(4, persons_info[i][1], persons_info[i][2], persons_info[i][0])
+
+
+def read_semester():
+    global semester
+
+    pages = [1]
+    extracted_text = read_text(pages)
+
+    start_point = extracted_text.find("Tarih: ") + 7
+    end_point = start_point + 10
+    semester_str = extracted_text[start_point:end_point]
+
+    month = int(semester_str[4])
+    year = int(semester_str[6:])
+
+    if month >= 3:
+        semester = str(year - 1) + "-" + str(year) + " Bahar"
+    else:
+        semester = str(year) + "-" + str(year + 1) + " Güz"
+
+    # create_semester(4, semester)
+
+
+def read_author():
+    pass
+
+
 if __name__ == "__main__":
-    read_text()
+    read_course_name()
+    read_title()
+    read_persons()
+    read_semester()
+    read_author()
