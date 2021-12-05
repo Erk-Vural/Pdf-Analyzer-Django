@@ -73,11 +73,7 @@ def read_image():
 course_name = ""
 title = ""
 
-staff_info_block = ""
-staff_1 = ""
-staff_2 = ""
-staff_3 = ""
-staff_info = [["", "", "", ""], ["", "", "", ""], ["", "", "", ""]]
+staff_info_block = ["", "", ""]
 
 semester = ""
 
@@ -123,16 +119,6 @@ def read_title():
 
 
 def read_staff():
-    read_block()
-    find_staff()
-    parse_staff_info(staff_1, 0)
-    parse_staff_info(staff_2, 1)
-    parse_staff_info(staff_3, 2)
-    save_staff_info()
-
-
-def read_block():
-    global staff_info_block
     pages = [1]
 
     extracted_text = read_text(pages)
@@ -149,15 +135,7 @@ def read_block():
 
     start_point = extracted_text.find(temp) + len(title) + 4
 
-    staff_info_block = extracted_text[start_point:]
-
-
-def find_staff():
-    global staff_1
-    global staff_2
-    global staff_3
-
-    info = staff_info_block
+    info = extracted_text[start_point:]
 
     info = info.replace("...", "")
     info = info.replace("..", "")
@@ -166,56 +144,47 @@ def find_staff():
     info = info[:end_point]
 
     end_point = info.find(",")
-    staff_1 = info[:end_point]
+    staff_info_block[0] = info[:end_point]
     info = info[end_point + 4:]
 
     end_point = info.find(",")
-    staff_2 = info[3:end_point]
+    staff_info_block[1] = info[3:end_point]
     info = info[end_point + 4:]
 
     end_point = info.find(",")
-    staff_3 = info
+    staff_info_block[2] = info
 
-
-def parse_staff_info(person, person_index):
-    title_str = ""
-    name_str = ""
-    last_name_str = ""
-    duty_str = ""
-
-    while person.find(".") != -1:
-        point = person.find(".")
-        title_str = title_str + person[:point]
-        person = person[point + 1:]
-
-    if person.find("Danışman") != -1:
-        point = person.find("Danışman")
-        person = person[:point]
-        duty_str = "Danışman"
-
-    elif person.find("Jüri") != -1:
-        point = person.find("Jüri Üyesi")
-        person = person[:point - 1]
-        duty_str = "Jüri Üyesi"
-
-    person = person[1:]
-
-    point = person.find(" ")
-    name_str = person[:point]
-    last_name_str = person[point + 1:]
-
-    staff_info[person_index][0] = title_str
-    staff_info[person_index][1] = name_str
-    staff_info[person_index][2] = last_name_str
-    staff_info[person_index][3] = duty_str
-
-
-def save_staff_info():
     for i in range(3):
-        if staff_info[i][3] == "Danışman":
+        title_str = ""
+        name_str = ""
+        last_name_str = ""
+        duty_str = ""
+
+        while staff_info_block[i].find(".") != -1:
+            point = staff_info_block[i].find(".")
+            title_str = title_str + staff_info_block[i][:point]
+            staff_info_block[i] = staff_info_block[i][point + 1:]
+
+        if staff_info_block[i].find("Danışman") != -1:
+            point = staff_info_block[i].find("Danışman")
+            staff_info_block[i] = staff_info_block[i][:point]
+            duty_str = "Danışman"
+
+        elif staff_info_block[i].find("Jüri") != -1:
+            point = staff_info_block[i].find("Jüri Üyesi")
+            staff_info_block[i] = staff_info_block[i][:point - 1]
+            duty_str = "Jüri Üyesi"
+
+        staff_info_block[i] = staff_info_block[i][1:]
+
+        point = staff_info_block[i].find(" ")
+        name_str = staff_info_block[i][:point]
+        last_name_str = staff_info_block[i][point + 1:]
+
+        if duty_str == "Danışman":
             pass
-            # create_mentor_info(4, persons_info[i][1], persons_info[i][2], persons_info[i][0])
-        # create_jury_info(4, persons_info[i][1], persons_info[i][2], persons_info[i][0])
+            # create_mentor_info(4, name_str, last_name_str, title_str)
+        # create_jury_info(4, name_str, last_name_str, title_str)
 
 
 def read_semester():
@@ -287,6 +256,7 @@ def read_summary():
 
 def read_keywords():
     global keywords
+    # range is wider for decrease missing wanted part of data
     pages = [6, 7, 8, 9, 10, 11]
 
     extracted_text = read_text(pages)
@@ -297,11 +267,12 @@ def read_keywords():
 
     while keywords_str.find(",") != -1:
         point = keywords_str.find(",") + 2
-        keyword = keywords_str[:point-3]
+        keyword = keywords_str[:point - 3]
         keywords_str = keywords_str[point:]
 
         keywords.append(keyword)
 
+    # Get last keyword
     if keywords_str.find(",") == -1:
         point = keywords_str.find(" ")
         keyword = keywords_str[:point]
