@@ -59,6 +59,26 @@ def create_author(pk, name, last_name, student_number, education_type):
     author.save()
 
 
+def create_summary(pk, content):
+    summary = Summary()
+    user = User.objects.get(id=pk)
+
+    summary.user_id = user
+    summary.content = content
+
+    summary.save()
+
+
+def create_keyword(pk, content):
+    keyword = Keyword()
+    user = User.objects.get(id=pk)
+
+    keyword.user_id = user
+    keyword.content = content
+
+    keyword.save()
+
+
 def create_document(form, pk):
     document = Document()
     user = User.objects.get(id=pk)

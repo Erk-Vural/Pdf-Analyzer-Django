@@ -72,7 +72,7 @@ class Title(models.Model):
         return self.content
 
 
-class Keywords(models.Model):
+class Keyword(models.Model):
     class Meta:
         db_table = "Keywords"
 
