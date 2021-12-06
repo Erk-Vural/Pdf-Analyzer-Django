@@ -19,8 +19,8 @@ def create_author(user_id, doc_id, name, last_name, student_number, education_ty
 
 
 def read_author(user_id, doc_id):
-    author = Author.objects.filter(user_id=user_id, doc_id=doc_id)
-    return author
+    authors = Author.objects.filter(user_id=user_id, doc_id=doc_id)
+    return authors
 
 
 def delete_author(user_id, doc_id):

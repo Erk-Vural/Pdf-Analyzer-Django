@@ -1,7 +1,7 @@
 from django.urls import path
 
 from Main.Views.admin import admin_panel_view
-from Main.Views.document import document_create_view, document_delete_view
+from Main.Views.document import document_create_view, document_delete_view, document_detail_view
 from Main.Views.login import login_view
 from Main.Views.user import user_create_view, user_delete_view, user_update_view, user_panel_view
 
@@ -19,5 +19,6 @@ urlpatterns = [
     path('user-panel/<int:pk>', user_panel_view, name='user-panel'),
     path('document/create/<int:pk>', document_create_view, name='document-create'),
     path('document/delete/<int:tk>/<int:pk>', document_delete_view, name='document-delete'),
+    path('document/detail/<int:tk>/<int:pk>', document_detail_view, name='document-detail'),
 
 ]

@@ -18,7 +18,7 @@
         {% for document in documents %}
 
             <div>
-                <a>Document: {{ document.document.name }}</a>
+                <a href="{% url 'document-detail' user_id document.id %}">Document: {{ document.document }}</a>
                 <a href="{% url 'document-delete' user_id document.id %}">Delete</a>
             </div>
 

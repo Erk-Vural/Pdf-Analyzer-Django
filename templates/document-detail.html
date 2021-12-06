@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Pdf Analyzer | Document Detail</title>
+{% endblock %}
+
+{% block home %}
+    <a class="navbar-brand p-sm-3" href="{% url 'user-panel' user_id %}">Home</a>
+{% endblock %}
+
+{% block content %}
+
+    <h2>Document Detail</h2>
+    <div>
+        <p>Title: {{ title.0.content }}</p>
+        <hr>
+
+        <p>Course Name: {{ course_name.0.content }}</p>
+        <hr>
+
+        <p>Semester: {{ semester.0.content }}</p>
+        <hr>
+
+        <h2>Summary: </h2>
+        <p>{{ summary.0.content }}</p>
+        <hr>
+
+        <h2>Keywords: </h2>
+        <ul>
+            {% for keyword in keywords %}
+                <li>{{ keyword.content }} </li>
+            {% endfor %}
+        </ul>
+        <hr>
+
+        <h2>Authors: </h2>
+        {% for author in authors %}
+            <div>
+                <p>Name: {{ author.name }}</p>
+                <p>Last Name: {{ author.last_name }}</p>
+                <p>Student Number: {{ author.student_number }}</p>
+                <p>Education Type: {{ author.education_type }}</p>
+                <hr>
+            </div>
+        {% endfor %}
+
+        <h2>Mentors: </h2>
+        {% for mentor_info in mentor_infos %}
+            <div>
+                <p>Name: {{ mentor_info.name }}</p>
+                <p>Last Name: {{ mentor_info.last_name }}</p>
+                <p>Title: {{ mentor_info.title }}</p>
+                <hr>
+            </div>
+        {% endfor %}
+
+        <h2>Jury: </h2>
+        {% for jury_info in jury_infos %}
+            <div>
+                <p>Name: {{ jury_info.name }}</p>
+                <p>Last Name: {{ jury_info.last_name }}</p>
+                <p>Title: {{ jury_info.title }}</p>
+                <hr>
+            </div>
+
+        {% endfor %}
+
+    </div>
+{% endblock %}
