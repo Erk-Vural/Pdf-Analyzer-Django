@@ -12,13 +12,13 @@
 
     <h2>Document Detail</h2>
     <div>
-        <p>Title: {{ title.0.content }}</p>
+        <p><em>Title: </em>{{ title.0.content }}</p>
         <hr>
 
-        <p>Course Name: {{ course_name.0.content }}</p>
+        <p><em>Course Name:</em> {{ course_name.0.content }}</p>
         <hr>
 
-        <p>Semester: {{ semester.0.content }}</p>
+        <p><em>Semester:</em> {{ semester.0.content }}</p>
         <hr>
 
         <h2>Summary: </h2>
@@ -36,10 +36,10 @@
         <h2>Authors: </h2>
         {% for author in authors %}
             <div>
-                <p>Name: {{ author.name }}</p>
-                <p>Last Name: {{ author.last_name }}</p>
-                <p>Student Number: {{ author.student_number }}</p>
-                <p>Education Type: {{ author.education_type }}</p>
+                <p><em>Name: </em>{{ author.name }}</p>
+                <p><em>Last Name:</em> {{ author.last_name }}</p>
+                <p><em>Student Number:</em> {{ author.student_number }}</p>
+                <p><em>Education Type:</em> {{ author.education_type }}</p>
                 <hr>
             </div>
         {% endfor %}
@@ -47,9 +47,9 @@
         <h2>Mentors: </h2>
         {% for mentor_info in mentor_infos %}
             <div>
-                <p>Name: {{ mentor_info.name }}</p>
-                <p>Last Name: {{ mentor_info.last_name }}</p>
-                <p>Title: {{ mentor_info.title }}</p>
+                <p><em>Name:</em> {{ mentor_info.name }}</p>
+                <p><em>Last Name:</em> {{ mentor_info.last_name }}</p>
+                <p><em>Title:</em> {{ mentor_info.title }}</p>
                 <hr>
             </div>
         {% endfor %}
@@ -57,9 +57,9 @@
         <h2>Jury: </h2>
         {% for jury_info in jury_infos %}
             <div>
-                <p>Name: {{ jury_info.name }}</p>
-                <p>Last Name: {{ jury_info.last_name }}</p>
-                <p>Title: {{ jury_info.title }}</p>
+                <p><em>Name:</em> {{ jury_info.name }}</p>
+                <p><em>Last Name:</em> {{ jury_info.last_name }}</p>
+                <p><em>Title:</em> {{ jury_info.title }}</p>
                 <hr>
             </div>
 

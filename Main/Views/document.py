@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 
 from Main.Services.author import read_author
 from Main.Services.course_name import read_course_name
-from Main.Services.document import create_document, read_all_documents_by_user
+from Main.Services.document import create_document
 from Main.Services.jury import read_jury_info
 from Main.Services.keyword import read_keyword
 from Main.Services.mentor import read_mentor_info
