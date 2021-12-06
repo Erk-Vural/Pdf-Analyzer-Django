@@ -1,4 +1,4 @@
-from Main.Models.Document import Author
+from Main.Models.Author import Author
 from Main.Models.User import User
 
 
@@ -20,7 +20,7 @@ def read_author(pk):
     return author
 
 
-def delete_author(pk):
+def delete_author(user_id, doc_id):
     author = read_author(pk)
 
     author.delete()

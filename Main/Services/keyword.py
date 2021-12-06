@@ -1,4 +1,4 @@
-from Main.Models.Document import Keyword
+from Main.Models.Keyword import Keyword
 from Main.Models.User import User
 
 
@@ -17,7 +17,7 @@ def read_keyword(pk):
     return keyword
 
 
-def delete_keyword(pk):
+def delete_keyword(user_id, doc_id):
     keyword = read_keyword(pk)
 
     keyword.delete()

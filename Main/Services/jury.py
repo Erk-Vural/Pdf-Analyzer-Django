@@ -1,4 +1,4 @@
-from Main.Models.Document import JuryInfo
+from Main.Models.JuryInfo import JuryInfo
 from Main.Models.User import User
 
 
@@ -19,7 +19,7 @@ def read_jury_info(pk):
     return jury_info
 
 
-def delete_jury_info(pk):
+def delete_jury_info(user_id, doc_id):
     jury_info = read_jury_info(pk)
 
     jury_info.delete()

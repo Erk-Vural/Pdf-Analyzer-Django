@@ -1,4 +1,4 @@
-from Main.Models.Document import CourseName
+from Main.Models.CourseName import CourseName
 from Main.Models.User import User
 
 
@@ -17,7 +17,7 @@ def read_course_name(pk):
     return course_name
 
 
-def delete_course_name(pk):
+def delete_course_name(user_id, doc_id):
     course_name = read_course_name(pk)
 
     course_name.delete()

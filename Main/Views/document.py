@@ -26,6 +26,6 @@ def document_create_view(request, pk):
 
 
 def document_delete_view(request, tk, pk):
-    delete_project(pk)
+    delete_project(tk, pk)
 
     return redirect('user-panel', tk)

@@ -1,23 +1,26 @@
-from Main.Models.Document import Semester
+from Main.Models.Document import Document
+from Main.Models.Semester import Semester
 from Main.Models.User import User
 
 
-def create_semester(pk, content):
+def create_semester(user_id, doc_id, content):
     semester = Semester()
-    user = User.objects.get(id=pk)
+    user = User.objects.get(id=user_id)
+    document = Document.objects.get(id=doc_id)
 
     semester.user_id = user
+    semester.doc_id = document
     semester.content = content
 
     semester.save()
 
 
-def read_semester(pk):
-    semester = Semester.objects.get(id=pk)
+def read_semester(user_id, doc_id):
+    semester = Semester.objects.get(user_id=user_id, doc_id=doc_id)
     return semester
 
 
-def delete_semester(pk):
-    semester = read_semester(pk)
+def delete_semester(user_id, doc_id):
+    semester = read_semester(user_id, doc_id)
 
     semester.delete()

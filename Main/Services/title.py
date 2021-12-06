@@ -1,4 +1,4 @@
-from Main.Models.Document import Title
+from Main.Models.Title import Title
 from Main.Models.User import User
 
 
@@ -17,7 +17,7 @@ def read_title(pk):
     return title
 
 
-def delete_title(pk):
+def delete_title(user_id, doc_id):
     title = read_title(pk)
 
     title.delete()

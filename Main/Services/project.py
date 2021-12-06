@@ -9,15 +9,15 @@ from Main.Services.summary import delete_summary
 from Main.Services.title import delete_title
 
 
-def delete_project(pk):
-    delete_document(pk)
-    delete_author(pk)
-    delete_course_name(pk)
-    delete_jury_info(pk)
-    delete_keyword(pk)
-    delete_mentor_info(pk)
-    delete_semester(pk)
-    delete_summary(pk)
-    delete_title(pk)
+def delete_project(user_id, doc_id):
+    delete_document(user_id)
+    delete_author(user_id, doc_id)
+    delete_course_name(user_id, doc_id)
+    delete_jury_info(user_id, doc_id)
+    delete_keyword(user_id, doc_id)
+    delete_mentor_info(user_id, doc_id)
+    delete_semester(user_id, doc_id)
+    delete_summary(user_id, doc_id)
+    delete_title(user_id, doc_id)
 
 

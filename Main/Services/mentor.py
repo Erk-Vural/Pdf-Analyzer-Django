@@ -1,4 +1,4 @@
-from Main.Models.Document import MentorInfo
+from Main.Models.MentorInfo import MentorInfo
 from Main.Models.User import User
 
 
@@ -19,7 +19,7 @@ def read_mentor_info(pk):
     return mentor_info
 
 
-def delete_mentor_info(pk):
+def delete_mentor_info(user_id, doc_id):
     mentor_info = read_mentor_info(pk)
 
     mentor_info.delete()
