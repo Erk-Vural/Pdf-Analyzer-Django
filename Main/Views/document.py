@@ -12,7 +12,7 @@ def document_create_view(request, pk):
 
         doc_id = create_document(form, pk)
         filename = form['document'].value().name
-        analyze_document(filename, pk, doc_id)
+        # analyze_document(filename, pk, doc_id)
 
         return redirect('user-panel', pk)
 

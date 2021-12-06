@@ -37,8 +37,9 @@ def read_document(pk):
 def delete_document(pk):
     document = read_document(pk)
 
-    local_pdf_filename = '../static/Main/documents/' + document.document.name
-    path = os.path.join(BASE, local_pdf_filename)
+    local_pdf_filename = '../../' + document.document.name
+    path = os.path.normpath(local_pdf_filename)
+    path = os.path.join(BASE, path)
     if os.path.exists(path):
         os.remove(path)
 
