@@ -24,7 +24,7 @@ urlpatterns = [
     path('document/delete/<int:tk>/<int:pk>', document_delete_view, name='document-delete'),
     path('document/detail/<int:tk>/<int:pk>', document_detail_view, name='document-detail'),
 
-    # Query urls
+    # Query urls - query list is common between 2 queries
     path('query1-home/<int:pk>', query1_home_view, name='query1-home'),
     path('author-list/<int:pk>', author_view, name='author-list'),
     path('courseName-list/<int:pk>', courseName_view, name='courseName-list'),
