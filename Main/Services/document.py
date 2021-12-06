@@ -14,6 +14,7 @@ def create_document(form, pk):
         document.document = form['document'].value()
 
         document.save()
+        return document.id
 
 
 def read_all_documents():
@@ -37,5 +38,8 @@ def delete_document(pk):
     document = read_document(pk)
 
     local_pdf_filename = '../static/Main/documents/' + document.document.name
-    os.remove(os.path.join(BASE, local_pdf_filename))
+    path = os.path.join(BASE, local_pdf_filename)
+    if os.path.exists(path):
+        os.remove(path)
+
     document.delete()

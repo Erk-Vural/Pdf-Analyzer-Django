@@ -16,7 +16,7 @@ def create_summary(user_id, doc_id, content):
 
 
 def read_summary(user_id, doc_id):
-    summary = Summary.objects.get(user_id=user_id, doc_id=doc_id)
+    summary = Summary.objects.filter(user_id=user_id, doc_id=doc_id)
     return summary
 
 

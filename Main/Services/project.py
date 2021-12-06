@@ -10,7 +10,7 @@ from Main.Services.title import delete_title
 
 
 def delete_project(user_id, doc_id):
-    delete_document(user_id)
+    delete_document(doc_id)
     delete_author(user_id, doc_id)
     delete_course_name(user_id, doc_id)
     delete_jury_info(user_id, doc_id)

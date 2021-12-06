@@ -1,19 +1,26 @@
 # -*- coding: utf-8 -*-
 import os.path
 
+from Main.Services.author import create_author
+from Main.Services.course_name import create_course_name
+from Main.Services.jury import create_jury_info
+from Main.Services.keyword import create_keyword
+from Main.Services.mentor import create_mentor_info
+from Main.Services.semester import create_semester
+from Main.Services.summary import create_summary
+from Main.Services.title import create_title
+
 import pytesseract
 from PIL import Image
 from pdf2image import convert_from_path
-
 from pdfminer import high_level
-
-from Main.Services.document import *
 
 # Path of tesseract
 pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'  # your path may be different
 
 filename = ""
 user_id = 0
+doc_id = 0
 
 course_name = ""
 title = ""
@@ -95,7 +102,7 @@ def read_course_name():
     elif extracted_text.find('ARAŞTIRMA PROBLEMLERİ') != -1:
         course_name = 'ARAŞTIRMA PROBLEMLERİ'
 
-    create_course_name(user_id, course_name)
+    create_course_name(user_id, doc_id, course_name)
 
 
 def read_title():
@@ -113,7 +120,7 @@ def read_title():
 
     title = block[: end_point]
 
-    create_title(user_id, title)
+    create_title(user_id, doc_id, title)
 
 
 def read_staff():
@@ -175,8 +182,8 @@ def read_staff():
 
         if duty_str == "Danışman":
             pass
-            create_mentor_info(user_id, name_str, last_name_str, title_str)
-        create_jury_info(user_id, name_str, last_name_str, title_str)
+            create_mentor_info(user_id, doc_id, name_str, last_name_str, title_str)
+        create_jury_info(user_id, doc_id, name_str, last_name_str, title_str)
 
 
 def read_semester():
@@ -197,7 +204,7 @@ def read_semester():
     else:
         semester = str(year) + "-" + str(year + 1) + " Güz"
 
-    create_semester(user_id, semester)
+    create_semester(user_id, doc_id, semester)
 
 
 def read_author():
@@ -228,7 +235,7 @@ def read_author():
             name = name_last_name[0:point]
             last_name = name_last_name[point:]
 
-            create_author(user_id, name, last_name, student_num, "1")
+            create_author(user_id, doc_id, name, last_name, student_num, "1")
 
 
 def read_summary():
@@ -242,7 +249,7 @@ def read_summary():
     extracted_text = extracted_text[start_point:end_point]
     summary = extracted_text.replace("\n", " ")
 
-    create_summary(user_id, summary)
+    create_summary(user_id, doc_id, summary)
 
 
 def read_keywords():
@@ -265,22 +272,24 @@ def read_keywords():
         keywords.append(keyword)
 
     # Get last keyword
-    if keywords_str.find(",") == -1:
+    if keywords_str.find(",") == -1 and keywords_str != "":
         keyword = keywords_str
 
         keywords.append(keyword)
 
     for i in range(len(keywords)):
         pass
-        create_keyword(user_id, keywords[i])
+        create_keyword(user_id, doc_id, keywords[i])
 
 
-def analyze_document(fl, pk):
+def analyze_document(fl, u_id, d_id):
     global filename
     global user_id
+    global doc_id
 
     filename = fl
-    user_id = pk
+    user_id = u_id
+    doc_id = d_id
 
     read_course_name()
     read_title()
@@ -292,4 +301,5 @@ def analyze_document(fl, pk):
 
 
 if __name__ == "__main__":
-    analyze_document('document/example-2.pdf', 4)
+    pass
+    # analyze_document('document/example-2.pdf')
