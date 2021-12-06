@@ -1,21 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Pdf Analyzer | Upload Document</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-<h2>Upload Document</h2>
+{% block head %}
+    <title>Pdf Analyzer | Create Document</title>
+{% endblock %}
 
-{{ formset.errors }}
-{{ formset.non_field_errors }}
+{% block home %}
+    <a class="navbar-brand p-sm-3" href="{% url 'user-panel' user_id %}">Home</a>
+{% endblock %}
 
-<form method="post" enctype=multipart/form-data>
-    {% csrf_token %}
-    {{ pdf_form.as_p }}
-    <button type="submit">Upload</button>
-</form>
+{% block content %}
+    <div>
 
-</body>
-</html>
+        <h2>Upload Document</h2>
+
+        {{ formset.errors }}
+        {{ formset.non_field_errors }}
+
+        <form method="post" enctype=multipart/form-data>
+            {% csrf_token %}
+            {{ pdf_form.as_p }}
+            <button type="submit">Upload</button>
+        </form>
+
+    </div>
+{% endblock %}

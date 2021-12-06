@@ -19,7 +19,8 @@ def document_create_view(request, pk):
     form = DocumentForm()
 
     context = {
-        'pdf_form': form
+        'pdf_form': form,
+        'user_id': pk
     }
 
     return render(request, "document-create.html", context)

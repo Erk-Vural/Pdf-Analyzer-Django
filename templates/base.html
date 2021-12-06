@@ -1,10 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% block head %}
+        <title>Pdf Analyzer</title>
+    {% endblock %}
 </head>
-<body>
+
+<body class="bg-light d-flex flex-column min-vh-100">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top h-100">
+    <div class="container-fluid">
+        <a class="navbar-brand p-sm-3" href="/">Login</a>
+        {% block home %}
+
+        {% endblock %}
+    </div>
+</nav>
+<!-- Navbar -->
+
+{% block content %}
+{% endblock %}
+
+
+<!-- Footer -->
+<footer class="text-center text-lg-start bg-dark text-muted text-light mt-auto">
+    <!-- Copyright -->
+    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+        © 2021 Copyright: Erk Vural
+    </div>
+    <!-- Copyright -->
+</footer>
+<!-- Footer -->
 
 </body>
 </html>

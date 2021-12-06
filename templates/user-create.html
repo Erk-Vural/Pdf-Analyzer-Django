@@ -1,15 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h2>User Create</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ user_form.as_p }}
-    <input type="submit" value="Create" class="btn bg-dark text-light  p-1 me-4">
-</form>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Pdf Analyzer | Create User</title>
+{% endblock %}
+
+{% block home %}
+    <a class="navbar-brand p-sm-3" href="/admin-panel">Home</a>
+{% endblock %}
+
+
+{% block content %}
+    <div>
+        <h2>User Create</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            <input type="submit" value="Create" class="btn bg-dark text-light  p-1 me-4">
+        </form>
+    </div>
+{% endblock %}
+
+

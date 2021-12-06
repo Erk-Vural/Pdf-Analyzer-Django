@@ -1,25 +1,28 @@
-{% load static %}
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% block head %}
     <title>Pdf Analyzer | User Panel</title>
-</head>
-<body>
+{% endblock %}
 
-<h2>User Panel</h2>
+{% block home %}
+    <a class="navbar-brand p-sm-3" href="{% url 'user-panel' user_id %}">Home</a>
+{% endblock %}
 
-<a href="{% url 'document-create' user_id %}">Upload Document(Pdf)</a>
+{% block content %}
 
-{% for document in documents %}
-
+    <h2>User Panel</h2>
     <div>
-        <a>Document: {{ document.document.name }}</a>
-        <a href="{% url 'document-delete' user_id document.id %}">Delete</a>
+
+        <a href="{% url 'document-create' user_id %}">Upload Document(Pdf)</a>
+
+        {% for document in documents %}
+
+            <div>
+                <a>Document: {{ document.document.name }}</a>
+                <a href="{% url 'document-delete' user_id document.id %}">Delete</a>
+            </div>
+
+        {% endfor %}
+
     </div>
-
-{% endfor %}
-
-</body>
-</html>
+{% endblock %}
