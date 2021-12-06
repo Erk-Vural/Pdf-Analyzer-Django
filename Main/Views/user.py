@@ -5,7 +5,7 @@ from Main.Services.user import create_user, delete_user, update_user
 from Main.forms import UserForm
 
 
-def user_panel_view(request, pk):
+def user_home_view(request, pk):
     documents = read_all_documents_by_user(pk)
 
     context = {

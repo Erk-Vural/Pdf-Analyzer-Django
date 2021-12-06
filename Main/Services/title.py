@@ -15,6 +15,11 @@ def create_title(user_id, doc_id, content):
     title.save()
 
 
+def read_title_by_user(user_id):
+    title = Title.objects.filter(user_id=user_id)
+    return title
+
+
 def read_title(user_id, doc_id):
     title = Title.objects.filter(user_id=user_id, doc_id=doc_id)
     return title

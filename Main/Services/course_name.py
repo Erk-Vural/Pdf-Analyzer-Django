@@ -15,6 +15,11 @@ def create_course_name(user_id, doc_id, content):
     course_name.save()
 
 
+def read_course_name_by_user(user_id):
+    course_name = CourseName.objects.filter(user_id=user_id)
+    return course_name
+
+
 def read_course_name(user_id, doc_id):
     course_name = CourseName.objects.filter(user_id=user_id, doc_id=doc_id)
     return course_name

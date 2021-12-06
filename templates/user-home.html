@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <title>Pdf Analyzer | User Panel</title>
+    <title>Pdf Analyzer | User Home</title>
 {% endblock %}
 
 {% block home %}
-    <a class="navbar-brand p-sm-3" href="{% url 'user-panel' user_id %}">Home</a>
+    <a class="navbar-brand p-sm-3" href="{% url 'user-home' user_id %}">Home</a>
+    <a class="navbar-brand p-sm-3" href="{% url 'query1-home' user_id %}">Query 1</a>
 {% endblock %}
 
 {% block content %}

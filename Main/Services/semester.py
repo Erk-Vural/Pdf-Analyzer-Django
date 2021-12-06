@@ -15,6 +15,11 @@ def create_semester(user_id, doc_id, content):
     semester.save()
 
 
+def read_semester_by_user(user_id):
+    semester = Semester.objects.filter(user_id=user_id)
+    return semester
+
+
 def read_semester(user_id, doc_id):
     semester = Semester.objects.filter(user_id=user_id, doc_id=doc_id)
     return semester

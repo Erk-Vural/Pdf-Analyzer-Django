@@ -22,7 +22,7 @@ def document_create_view(request, pk):
         filename = form['document'].value().name
         analyze_document(filename, pk, doc_id)
 
-        return redirect('user-panel', pk)
+        return redirect('user-home', pk)
 
     form = DocumentForm()
 
@@ -37,7 +37,7 @@ def document_create_view(request, pk):
 def document_delete_view(request, tk, pk):
     delete_project(tk, pk)
 
-    return redirect('user-panel', tk)
+    return redirect('user-home', tk)
 
 
 def document_detail_view(request, tk, pk):

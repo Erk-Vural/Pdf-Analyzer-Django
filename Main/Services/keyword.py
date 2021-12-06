@@ -15,6 +15,11 @@ def create_keyword(user_id, doc_id, content):
     keyword.save()
 
 
+def read_keyword_by_user(user_id):
+    keyword = Keyword.objects.filter(user_id=user_id)
+    return keyword
+
+
 def read_keyword(user_id, doc_id):
     keyword = Keyword.objects.filter(user_id=user_id, doc_id=doc_id)
     return keyword

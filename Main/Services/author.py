@@ -18,6 +18,11 @@ def create_author(user_id, doc_id, name, last_name, student_number, education_ty
     author.save()
 
 
+def read_author_by_user(user_id):
+    authors = Author.objects.filter(user_id=user_id)
+    return authors
+
+
 def read_author(user_id, doc_id):
     authors = Author.objects.filter(user_id=user_id, doc_id=doc_id)
     return authors

@@ -5,12 +5,13 @@
 {% endblock %}
 
 {% block home %}
-    <a class="navbar-brand p-sm-3" href="{% url 'user-panel' user_id %}">Home</a>
+    <a class="navbar-brand p-sm-3" href="{% url 'user-home' user_id %}">Home</a>
+    <a class="navbar-brand p-sm-3" href="{% url 'query1-home' user_id %}">Query 1</a>
 {% endblock %}
 
 {% block content %}
 
-    <h2>Document Detail</h2>
+    <h1>Document Detail</h1>
     <div>
         <p><em>Title: </em>{{ title.0.content }}</p>
         <hr>
