@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 
 from Main.Services.document import delete_document, create_document
+from Main.Services.project import delete_project
 from Main.document_analyzer import analyze_document
 from Main.forms import DocumentForm
 
@@ -25,6 +26,6 @@ def document_create_view(request, pk):
 
 
 def document_delete_view(request, tk, pk):
-    delete_document(pk)
+    delete_project(pk)
 
     return redirect('user-panel', tk)

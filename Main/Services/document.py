@@ -3,25 +3,7 @@ import os
 from Main.Models.Document import *
 from Main.Models.User import User
 
-
-def create_course_name(pk, content):
-    course_name = CourseName()
-    user = User.objects.get(id=pk)
-
-    course_name.user_id = user
-    course_name.content = content
-
-    course_name.save()
-
-
-def create_title(pk, content):
-    title = Title()
-    user = User.objects.get(id=pk)
-
-    title.user_id = user
-    title.content = content
-
-    title.save()
+BASE = os.path.dirname(os.path.abspath(__file__))
 
 
 def create_mentor_info(pk, name, last_name, title):
@@ -34,61 +16,6 @@ def create_mentor_info(pk, name, last_name, title):
     mentor_info.title = title
 
     mentor_info.save()
-
-
-def create_jury_info(pk, name, last_name, title):
-    jury_info = JuryInfo()
-    user = User.objects.get(id=pk)
-
-    jury_info.user_id = user
-    jury_info.name = name
-    jury_info.last_name = last_name
-    jury_info.title = title
-
-    jury_info.save()
-
-
-def create_semester(pk, content):
-    semester = Semester()
-    user = User.objects.get(id=pk)
-
-    semester.user_id = user
-    semester.content = content
-
-    semester.save()
-
-
-def create_author(pk, name, last_name, student_number, education_type):
-    author = Author()
-    user = User.objects.get(id=pk)
-
-    author.user_id = user
-    author.name = name
-    author.last_name = last_name
-    author.student_number = student_number
-    author.education_type = education_type
-
-    author.save()
-
-
-def create_summary(pk, content):
-    summary = Summary()
-    user = User.objects.get(id=pk)
-
-    summary.user_id = user
-    summary.content = content
-
-    summary.save()
-
-
-def create_keyword(pk, content):
-    keyword = Keyword()
-    user = User.objects.get(id=pk)
-
-    keyword.user_id = user
-    keyword.content = content
-
-    keyword.save()
 
 
 def create_document(form, pk):
@@ -121,4 +48,6 @@ def read_document(pk):
 def delete_document(pk):
     document = read_document(pk)
 
+    local_pdf_filename = '../static/Main/documents/' + document.document.name
+    os.remove(os.path.join(BASE, local_pdf_filename))
     document.delete()

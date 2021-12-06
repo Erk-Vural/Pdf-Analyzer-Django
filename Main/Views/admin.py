@@ -10,4 +10,4 @@ def admin_panel_view(request):
         'users': users,
     }
 
-    return render(request, "admin-panel.html", context)
+    return render(request, "admin-home.html", context)

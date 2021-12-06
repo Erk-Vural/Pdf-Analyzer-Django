@@ -13,7 +13,7 @@ def user_panel_view(request, pk):
         'documents': documents
     }
 
-    return render(request, "user-panel.html", context)
+    return render(request, "user-home.html", context)
 
 
 def user_create_view(request):
