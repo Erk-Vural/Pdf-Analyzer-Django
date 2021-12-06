@@ -66,7 +66,7 @@ def semester_view(request, pk):
     return render(request, "query1.html", context)
 
 
-def query1_list_view(request, tk, pk):
+def query_list_view(request, tk, pk):
     documents = read_document(tk, pk)
 
     context = {
@@ -75,4 +75,4 @@ def query1_list_view(request, tk, pk):
         'documents': documents
     }
 
-    return render(request, "query1-list.html", context)
+    return render(request, "query-list.html", context)

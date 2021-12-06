@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block head %}
+    <title>Pdf Analyzer | Query 2 </title>
+{% endblock %}
+
+{% block home %}
+    <a class="navbar-brand p-sm-3" href="{% url 'user-home' user_id %}">Home</a>
+    <a class="navbar-brand p-sm-3" href="{% url 'query1-home' user_id %}">Query 1</a>
+    <a class="navbar-brand p-sm-3" href="{% url 'query2-home' user_id %}">Query 2</a>
+{% endblock %}
+
+{% block content %}
+
+    {% if datas.0.doc_id != NULL %}
+        {% for data in datas %}
+            <div>
+                <a href="{% url 'query-list' user_id data.doc_id.id %}">{{ data.content }}</a>
+            </div>
+
+        {% endfor %}
+    {% endif %}
+
+{% endblock %}

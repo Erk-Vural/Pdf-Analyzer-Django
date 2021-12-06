@@ -4,7 +4,8 @@ from Main.Views.admin import admin_panel_view
 from Main.Views.document import document_create_view, document_delete_view, document_detail_view
 from Main.Views.login import login_view
 from Main.Views.query1 import query1_home_view, author_view, courseName_view, title_view, keyword_view, semester_view, \
-    query1_list_view
+    query_list_view
+from Main.Views.query2 import query2_home_view
 from Main.Views.user import user_create_view, user_delete_view, user_update_view, user_home_view
 
 urlpatterns = [
@@ -23,15 +24,15 @@ urlpatterns = [
     path('document/delete/<int:tk>/<int:pk>', document_delete_view, name='document-delete'),
     path('document/detail/<int:tk>/<int:pk>', document_detail_view, name='document-detail'),
 
-    # Query 1 urls
+    # Query urls
     path('query1-home/<int:pk>', query1_home_view, name='query1-home'),
     path('author-list/<int:pk>', author_view, name='author-list'),
     path('courseName-list/<int:pk>', courseName_view, name='courseName-list'),
     path('title-list/<int:pk>', title_view, name='title-list'),
     path('keyword-list/<int:pk>', keyword_view, name='keyword-list'),
     path('semester-list/<int:pk>', semester_view, name='semester-list'),
-    path('query1-list/<int:tk>/<int:pk>', query1_list_view, name='query1-list'),
 
-
+    path('query2-home/<int:pk>', query2_home_view, name='query2-home'),
+    path('query-list/<int:tk>/<int:pk>', query_list_view, name='query-list'),
 
 ]
