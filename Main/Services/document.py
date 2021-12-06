@@ -23,15 +23,15 @@ def read_all_documents():
     return documents
 
 
-def read_all_documents_by_user(user_id):
+def read_documents_by_user(user_id):
     documents = Document.objects.filter(user_id=user_id)
 
     return documents
 
 
-def read_document(pk):
-    document = Document.objects.get(id=pk)
-    return document
+def read_document(user_id, doc_id):
+    documents = Document.objects.filter(id=doc_id, user_id=user_id)
+    return documents
 
 
 def delete_document(pk):

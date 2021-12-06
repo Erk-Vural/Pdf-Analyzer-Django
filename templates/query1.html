@@ -19,7 +19,7 @@
     {% if datas.0.id != NULL %}
         {% for data in datas %}
             <div>
-                <a href="{% url 'document-detail' user_id data.doc_id.id %}">{{ data }}</a>
+                <a href="{% url 'query1-list' user_id data.doc_id.id %}">{{ data }}</a>
             </div>
 
         {% endfor %}

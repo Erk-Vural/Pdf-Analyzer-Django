@@ -1,12 +1,12 @@
 from django.shortcuts import redirect, render
 
-from Main.Services.document import read_all_documents_by_user
+from Main.Services.document import read_documents_by_user
 from Main.Services.user import create_user, delete_user, update_user
 from Main.forms import UserForm
 
 
 def user_home_view(request, pk):
-    documents = read_all_documents_by_user(pk)
+    documents = read_documents_by_user(pk)
 
     context = {
         'user_id': pk,
