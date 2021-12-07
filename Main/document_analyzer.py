@@ -96,11 +96,13 @@ def read_course_name():
     pages = [1]
     extracted_text = read_text(pages)
 
-    if extracted_text.find('BİTİRME ÇALIŞMASI') != -1:
-        course_name = 'BİTİRME ÇALIŞMASI'
+    start_point = extracted_text.find("BİLGİSAYAR MÜHENDİSLİĞİ BÖLÜMÜ") + 30 + 2
+    block = extracted_text[start_point:]
+    end_point = block.find("\n")
+    block = block[:end_point]
+    block.replace("\n", "")
 
-    elif extracted_text.find('ARAŞTIRMA PROBLEMLERİ') != -1:
-        course_name = 'ARAŞTIRMA PROBLEMLERİ'
+    course_name = block
 
     create_course_name(user_id, doc_id, course_name)
 

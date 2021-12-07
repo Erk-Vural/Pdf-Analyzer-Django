@@ -23,19 +23,25 @@ def read_all_documents():
     return documents
 
 
+def read_document(doc_id):
+    documents = Document.objects.get(id=doc_id)
+
+    return documents
+
+
 def read_documents_by_user(user_id):
     documents = Document.objects.filter(user_id=user_id)
 
     return documents
 
 
-def read_document(user_id, doc_id):
+def read_document_user_doc_id(user_id, doc_id):
     documents = Document.objects.filter(id=doc_id, user_id=user_id)
     return documents
 
 
-def delete_document(pk):
-    document = read_document(pk)
+def delete_document(doc_id):
+    document = read_document(doc_id)
 
     local_pdf_filename = '../../' + document.document.name
     path = os.path.normpath(local_pdf_filename)

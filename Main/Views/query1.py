@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from Main.Services.author import read_author_by_user
 from Main.Services.course_name import read_course_name_by_user
-from Main.Services.document import read_documents_by_user, read_document
+from Main.Services.document import read_documents_by_user, read_document_user_doc_id
 from Main.Services.keyword import read_keyword_by_user
 from Main.Services.title import read_title_by_user
 from Main.Services.semester import read_semester_by_user
@@ -67,7 +67,7 @@ def semester_view(request, pk):
 
 
 def query_list_view(request, tk, pk):
-    documents = read_document(tk, pk)
+    documents = read_document_user_doc_id(tk, pk)
 
     context = {
         'user_id': tk,
