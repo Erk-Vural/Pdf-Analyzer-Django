@@ -11,12 +11,15 @@
 
 {% block content %}
     <div>
+        <br>
         <h2 class="text-center fw-bold">User Create</h2>
+        <br>
         <form class="text-center mb-5" method="post">
             {% csrf_token %}
             {{ user_form.as_p }}
             <input type="submit" value="Create" class="btn bg-dark text-light  p-1 me-4">
         </form>
+        <br>
     </div>
 {% endblock %}
 
