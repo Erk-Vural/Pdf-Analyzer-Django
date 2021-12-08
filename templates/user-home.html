@@ -15,11 +15,11 @@
     <div>
         <br>
         <h2 class="text-center fw-bold">User: {{ user }} 's Documents</h2>
-        <a class="btn bg-dark text-light  p-1 me-4" href="{% url 'document-create' user_id %}">Upload Document(Pdf)</a>
+        <a class="btn bg-dark text-light  p-1 m-2" href="{% url 'document-create' user_id %}">Upload Document(Pdf)</a>
 
         {% for document in documents %}
 
-            <div class=" text-center mx-auto w-auto">
+            <div class=" text-center mx-auto w-auto m-3">
                 <em><strong>Document: </strong></em>
                 <a class="text-dark ms-1"
                    href="{% url 'document-detail' user_id document.id %}">{{ document.document }}</a>
