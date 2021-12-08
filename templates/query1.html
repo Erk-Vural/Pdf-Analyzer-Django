@@ -11,16 +11,17 @@
 {% endblock %}
 
 {% block content %}
-    <a class="navbar-brand p-sm-3" href="{% url 'author-list' user_id %}">By Author</a>
-    <a class="navbar-brand p-sm-3" href="{% url 'courseName-list' user_id %}">By Course Name</a>
-    <a class="navbar-brand p-sm-3" href="{% url 'title-list' user_id %}">By Project Title</a>
-    <a class="navbar-brand p-sm-3" href="{% url 'keyword-list' user_id %}">By Keywords</a>
-    <a class="navbar-brand p-sm-3" href="{% url 'semester-list' user_id %}">By Semester</a>
+    <a class="btn bg-dark text-light  p-1 m-2" href="{% url 'author-list' user_id %}">By Author</a>
+    <a class="btn bg-dark text-light  p-1 m-2" href="{% url 'courseName-list' user_id %}">By Course Name</a>
+    <a class="btn bg-dark text-light  p-1 m-2" href="{% url 'title-list' user_id %}">By Project Title</a>
+    <a class="btn bg-dark text-light  p-1 m-2" href="{% url 'keyword-list' user_id %}">By Keywords</a>
+    <a class="btn bg-dark text-light  p-1 m-2" href="{% url 'semester-list' user_id %}">By Semester</a>
 
+    <h3 class="text-center fw-bold mt-2">User {{ user }}'s Documents Filtered by Selected Category</h3>
     {% if datas.0.id != NULL %}
         {% for data in datas %}
-            <div>
-                <a href="{% url 'query-list' user_id data.doc_id.id %}">{{ data }}</a>
+            <div class="text-center">
+                <a class="text-dark ms-1" href="{% url 'query-list' user_id data.doc_id.id %}">{{ data }}</a>
             </div>
 
         {% endfor %}

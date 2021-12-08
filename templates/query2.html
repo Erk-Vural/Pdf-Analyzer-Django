@@ -11,11 +11,11 @@
 {% endblock %}
 
 {% block content %}
-
+    <h3 class="text-center fw-bold mt-3">User {{ user }}'s Documents Filtered by Semester and Course Name</h3>
     {% if datas.0.doc_id != NULL %}
         {% for data in datas %}
-            <div>
-                <a href="{% url 'query-list' user_id data.doc_id.id %}">{{ data.content }}</a>
+            <div class="text-center">
+                <a class="text-dark ms-1" href="{% url 'query-list' user_id data.doc_id.id %}">{{ data.content }}</a>
             </div>
 
         {% endfor %}
