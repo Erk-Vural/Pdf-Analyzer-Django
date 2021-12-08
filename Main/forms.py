@@ -2,12 +2,12 @@ from django import forms
 
 
 class AdminForm(forms.Form):
-    username = forms.CharField(label="Username: ")
-    password = forms.CharField(label="Password: ")
+    username = forms.CharField(label="Username ")
+    password = forms.CharField(label="Password ")
 
 
 class UserForm(forms.Form):
-    username = forms.CharField(label="Username: ")
+    username = forms.CharField(label="Username ")
 
 
 class DocumentForm(forms.Form):
