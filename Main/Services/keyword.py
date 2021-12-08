@@ -21,8 +21,8 @@ def read_keyword_by_user(user_id):
 
 
 def read_keyword(user_id, doc_id):
-    keyword = Keyword.objects.filter(user_id=user_id, doc_id=doc_id)
-    return keyword
+    keywords = Keyword.objects.filter(user_id=user_id, doc_id=doc_id)
+    return keywords
 
 
 def delete_keyword(user_id, doc_id):

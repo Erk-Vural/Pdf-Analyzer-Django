@@ -95,8 +95,11 @@ def read_course_name():
 
     pages = [1]
     extracted_text = read_text(pages)
+    extracted_text = extracted_text.replace("        ", "\n\n")
+    extracted_text = extracted_text.replace("    ", "\n\n")
+    extracted_text = extracted_text.replace("  ", "\n\n")
 
-    start_point = extracted_text.find("BİLGİSAYAR MÜHENDİSLİĞİ BÖLÜMÜ") + 30 + 2
+    start_point = extracted_text.find("BİLGİSAYAR") + 30 + 2
     block = extracted_text[start_point:]
     end_point = block.find("\n")
     block = block[:end_point]
@@ -112,6 +115,9 @@ def read_title():
     pages = [1]
 
     extracted_text = read_text(pages)
+    extracted_text = extracted_text.replace("        ", "\n\n")
+    extracted_text = extracted_text.replace("    ", "\n\n")
+    extracted_text = extracted_text.replace("  ", "\n\n")
 
     # add 4 to avoid new lines
     start_point = extracted_text.find(course_name) + len(course_name) + 4
@@ -129,6 +135,9 @@ def read_staff():
     pages = [1]
 
     extracted_text = read_text(pages)
+    extracted_text = extracted_text.replace("        ", "\n\n")
+    extracted_text = extracted_text.replace("    ", "\n\n")
+    extracted_text = extracted_text.replace("  ", "\n\n")
 
     start_point = extracted_text.find(title) + len(title) + 2
 
@@ -193,6 +202,9 @@ def read_semester():
 
     pages = [1]
     extracted_text = read_text(pages)
+    extracted_text = extracted_text.replace("        ", "\n\n")
+    extracted_text = extracted_text.replace("    ", "\n\n")
+    extracted_text = extracted_text.replace("  ", "\n\n")
 
     start_point = extracted_text.find("Tarih: ") + 7
     end_point = start_point + 10
@@ -214,6 +226,9 @@ def read_author():
     pages = [3]
 
     extracted_text = read_text(pages)
+    extracted_text = extracted_text.replace("        ", "\n\n")
+    extracted_text = extracted_text.replace("    ", "\n\n")
+    extracted_text = extracted_text.replace("  ", "\n\n")
 
     for i in range(3):
         if extracted_text.find("Öğrenci") != -1:
@@ -245,9 +260,12 @@ def read_summary():
     pages = [6, 7, 8, 9, 10, 11]
 
     extracted_text = read_text(pages)
+    extracted_text = extracted_text.replace("        ", "\n\n")
+    extracted_text = extracted_text.replace("    ", "\n\n")
+    extracted_text = extracted_text.replace("  ", "\n\n")
 
     start_point = extracted_text.find("ÖZET") + 4
-    end_point = extracted_text.find("Anahtar Kelimeler:") - 2
+    end_point = extracted_text.find("Anahtar") - 2
     extracted_text = extracted_text[start_point:end_point]
     summary = extracted_text.replace("\n", " ")
 
@@ -260,8 +278,11 @@ def read_keywords():
     pages = [6, 7, 8, 9, 10, 11]
 
     extracted_text = read_text(pages)
+    extracted_text = extracted_text.replace("        ", "\n\n")
+    extracted_text = extracted_text.replace("    ", "\n\n")
+    extracted_text = extracted_text.replace("  ", "\n\n")
 
-    start_point = extracted_text.find("Anahtar Kelimeler:") + 19
+    start_point = extracted_text.find("Anahtar") + 19
     extracted_text = extracted_text[start_point:]
     end_point = extracted_text.find("\n")
     keywords_str = extracted_text[:end_point]
@@ -282,6 +303,8 @@ def read_keywords():
     for i in range(len(keywords)):
         pass
         create_keyword(user_id, doc_id, keywords[i])
+
+    keywords = []
 
 
 def analyze_document(fl, u_id, d_id):
