@@ -18,10 +18,10 @@
         {{ formset.errors }}
         {{ formset.non_field_errors }}
 
-        <form method="post" enctype=multipart/form-data>
+        <form class="text-center mb-5" method="post" enctype=multipart/form-data>
             {% csrf_token %}
             {{ pdf_form.as_p }}
-            <button type="submit">Upload</button>
+            <button class="btn bg-dark text-light  p-1 me-4" type="submit">Upload</button>
         </form>
 
     </div>

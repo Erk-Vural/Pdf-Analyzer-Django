@@ -11,8 +11,8 @@
 
 {% block content %}
     <div>
-        <h2>User Create</h2>
-        <form method="post">
+        <h2 class="text-center fw-bold">User Create</h2>
+        <form class="text-center mb-5" method="post">
             {% csrf_token %}
             {{ user_form.as_p }}
             <input type="submit" value="Create" class="btn bg-dark text-light  p-1 me-4">

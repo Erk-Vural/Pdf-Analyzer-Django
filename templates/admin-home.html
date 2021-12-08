@@ -10,20 +10,19 @@
 
 {% block content %}
     <div>
+        <h2 class="text-center fw-bold">User List</h2>
 
-        <h2>User List</h2>
-
-        <a href="user/create">Create</a>
+        <a class="btn bg-dark text-light  p-1 me-4" href="user/create">Create</a>
 
         {% for user in users %}
-            <div>
-                <a href="{% url 'user-home' user.id %}">{{ user.username }}</a>
+            <div class="text-center">
+                <em>User: </em>
+                <a class="text-dark ms-1" href="{% url 'user-home' user.id %}">{{ user.username }}</a>
 
-                <a href="{% url 'user-delete' user.id %}">Delete</a>
-                <a href="{% url 'user-update' user.id %}">Update</a>
+                <a class="btn btn-dark ms-1 p-1 text-light" href="{% url 'user-delete' user.id %}">Delete</a>
+                <a class="btn btn-dark ms-1 p-1 text-light" href="{% url 'user-update' user.id %}">Update</a>
             </div>
+            <br>
         {% endfor %}
-
-
     </div>
 {% endblock %}
