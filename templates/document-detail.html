@@ -12,22 +12,29 @@
 
 {% block content %}
 
-    <h1>Document Detail</h1>
-    <div>
-        <p><em>Title: </em>{{ title.0.content }}</p>
+    <h1 class="text-center fw-bold">Document Detail</h1>
+    <div class="text-center">
+        <br>
+        <p ><em><strong>Title:</strong> </em>{{ title.0.content }}</p>
         <hr>
 
-        <p><em>Course Name:</em> {{ course_name.0.content }}</p>
+        <br>
+        <p><em><strong>Course Name:</strong> </em> {{ course_name.0.content }}</p>
         <hr>
 
-        <p><em>Semester:</em> {{ semester.0.content }}</p>
+        <br>
+        <p><em><strong>Semester:</strong> </em> {{ semester.0.content }}</p>
         <hr>
 
-        <h2>Summary: </h2>
+
+        <h2 class="text-center fw-bold">Summary: </h2>
+        <br>
         <p>{{ summary.0.content }}</p>
         <hr>
 
-        <h2>Keywords: </h2>
+
+        <h2 class="text-center fw-bold">Keywords: </h2>
+        <br>
         <ul>
             {% for keyword in keywords %}
                 <li>{{ keyword.content }} </li>
@@ -35,33 +42,38 @@
         </ul>
         <hr>
 
-        <h2>Authors: </h2>
+
+        <h2 class="text-center fw-bold">Authors: </h2>
+        <br>
         {% for author in authors %}
             <div>
-                <p><em>Name: </em>{{ author.name }}</p>
-                <p><em>Last Name:</em> {{ author.last_name }}</p>
-                <p><em>Student Number:</em> {{ author.student_number }}</p>
-                <p><em>Education Type:</em> {{ author.education_type }}</p>
+                <p><em><strong>Name:</strong> </em>{{ author.name }}</p>
+                <p><em><strong>Last Name:</strong></em> {{ author.last_name }}</p>
+                <p><em><strong>Student Number:</strong></em> {{ author.student_number }}</p>
+                <p><em><strong>Education Type:</strong></em> {{ author.education_type }}</p>
                 <hr>
             </div>
         {% endfor %}
 
-        <h2>Mentors: </h2>
+
+        <h2 class="text-center fw-bold">Mentors: </h2>
+        <br>
         {% for mentor_info in mentor_infos %}
             <div>
-                <p><em>Name:</em> {{ mentor_info.name }}</p>
-                <p><em>Last Name:</em> {{ mentor_info.last_name }}</p>
-                <p><em>Title:</em> {{ mentor_info.title }}</p>
+                <p><em><strong>Name:</strong></em> {{ mentor_info.name }}</p>
+                <p><em><strong>Last Name:</strong></em> {{ mentor_info.last_name }}</p>
+                <p><em><strong>Title:</strong></em> {{ mentor_info.title }}</p>
                 <hr>
             </div>
         {% endfor %}
 
-        <h2>Jury: </h2>
+        <h2 class="text-center fw-bold">Jury: </h2>
+        <br>
         {% for jury_info in jury_infos %}
             <div>
-                <p><em>Name:</em> {{ jury_info.name }}</p>
-                <p><em>Last Name:</em> {{ jury_info.last_name }}</p>
-                <p><em>Title:</em> {{ jury_info.title }}</p>
+                <p><em><strong>Name:</strong></em> {{ jury_info.name }}</p>
+                <p><em><strong>Last Name:</strong> </em> {{ jury_info.last_name }}</p>
+                <p><em><strong>Title:</strong> </em> {{ jury_info.title }}</p>
                 <hr>
             </div>
 
