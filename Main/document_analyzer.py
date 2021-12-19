@@ -344,12 +344,12 @@ def read_keywords():
     start_point = extracted_text.find("Anahtar") + 19
     extracted_text = extracted_text[start_point:]
     extracted_text = extracted_text.replace("\n", " ")
-    end_point = extracted_text.find("ABSTRACT")
-    keywords_str = extracted_text[:end_point -5]
+    end_point = extracted_text.find("\f")
+    keywords_str = extracted_text[:end_point -2]
 
     while keywords_str.find(",") != -1:
         point = keywords_str.find(",") + 2
-        keyword = keywords_str[:point - 3]
+        keyword = keywords_str[:point - 2]
         keywords_str = keywords_str[point:]
 
         keywords.append(keyword)
