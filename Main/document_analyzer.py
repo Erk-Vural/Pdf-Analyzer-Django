@@ -29,6 +29,7 @@ semester = ""
 authors_info_block = ["", "", ""]
 summary = ""
 keywords = []
+readImagePages=[]
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 
@@ -42,47 +43,98 @@ def read_text(pages):
 
 
 def read_image():
-    # Part 1 - Save all pages from pdf as jpg
+    # # Part 1 - Save all pages from pdf as jpg
 
-    # Store all the pages of the PDF in a variable
-    pages = convert_from_path('../static/Main/documents/example-2.pdf', 100,
-                              poppler_path=r'C:\Program Files\poppler-0.68.0\bin')
+    # # Store all the pages of the PDF in a variable
+    # pages = convert_from_path('../static/Main/documents/example-2.pdf', 100,
+    #                           poppler_path=r'C:\Program Files\poppler-0.68.0\bin')
 
-    # Counter to store images of each page of PDF to image
-    image_counter = 1
+    # # Counter to store images of each page of PDF to image
+    # image_counter = 1
 
-    # Iterate through all the pages stored above
-    for page in pages:
-        # Declaring filename for each page of PDF as JPG
-        filename = "page_" + str(image_counter) + ".jpg"
+    # # Iterate through all the pages stored above
+    # for page in pages:
+    #     # Declaring filename for each page of PDF as JPG
+    #     filename = "page_" + str(image_counter) + ".jpg"
 
-        # Save the image of the page in system
-        page.save(filename, 'JPEG')
+    #     # Save the image of the page in system
+    #     page.save(filename, 'JPEG')
 
-        # Increment the counter to update filename
-        image_counter = image_counter + 1
+    #     # Increment the counter to update filename
+    #     image_counter = image_counter + 1
 
-    # Part 2 - Recognizing text from the images using OCR
+    # # Part 2 - Recognizing text from the images using OCR
 
-    # Variable to get count of total number of pages
-    file_limit = image_counter - 1
+    # # Variable to get count of total number of pages
+    # file_limit = image_counter - 1
 
+    # # Creating a text file to write the output
+    # outfile = "out_text.txt"
+
+    # # Open the file in append mode so that
+    # # All contents of all images are added to the same file
+    # f = open(outfile, "a")
+
+    # # Iterate from 1 to total number of pages
+    # for i in range(1, file_limit + 1):
+    #     filename = "page_" + str(i) + ".jpg"
+
+    #     # Recognize the text as string in image using pytesseract
+    #     text = str((pytesseract.image_to_string(Image.open(filename))))
+
+    #     text = text.replace('-\n', '')
+
+    #     # Finally, write the processed text to the file.
+    #     f.write(text)
+
+    # # Close the file after writing all the text.
+    # f.close()
     # Creating a text file to write the output
     outfile = "out_text.txt"
 
     # Open the file in append mode so that
     # All contents of all images are added to the same file
     f = open(outfile, "a")
+    # f.write("Read images icindeyiz")
+    # Part 1 - Save all pages from pdf as jpg
+    # PDF_file = "example-2.pdf"
+    PDF_file = '../static/Main/documents/' + filename
+    PDF_file1 = os.path.join(BASE, PDF_file)
+
+    pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
+    image_pages = convert_from_path(PDF_file1, 500)
+
+    image_counter = 1
+
+    for page in image_pages:
+        #  PDF as JPG
+        image_filename = "page_" + str(image_counter) + ".jpg"
+
+        # Save
+        page.save(image_filename, 'JPEG')
+
+        # Increment the counter to update filename
+        image_counter = image_counter + 1
+        if image_counter == 11:
+            # if  image_counter==14:
+            break
+
+    # Part 2 - Recognizing text from the images using OCR
+
+    # Variable to get count of total number of pages
+    # file_limit = image_counter - 1
+    file_limit = 10
+    # file_limit=13
 
     # Iterate from 1 to total number of pages
     for i in range(1, file_limit + 1):
-        filename = "page_" + str(i) + ".jpg"
+        image_filename = "page_" + str(i) + ".jpg"
 
         # Recognize the text as string in image using pytesseract
-        text = str((pytesseract.image_to_string(Image.open(filename))))
+        text = str((pytesseract.image_to_string(Image.open(image_filename))))
 
         text = text.replace('-\n', '')
-
+        readImagePages.append(text)
         # Finally, write the processed text to the file.
         f.write(text)
 
@@ -99,7 +151,14 @@ def read_course_name():
     extracted_text = extracted_text.replace("    ", "\n\n")
     extracted_text = extracted_text.replace("  ", "\n\n")
 
-    start_point = extracted_text.find("BİLGİSAYAR") + 30 + 2
+    if extracted_text.find("ARAŞTIRMA PROBLEMLERİ") != -1:
+        start_point = extracted_text.find("ARAŞTIRMA PROBLEMLERİ")
+    if extracted_text.find("BİTİRME ÇALIŞMASI") != -1:
+        start_point = extracted_text.find("BİTİRME ÇALIŞMASI")
+    if extracted_text.find("BİTİRME PROJESİ") != -1:
+        start_point = extracted_text.find("BİTİRME PROJESİ")
+    # start_point = extracted_text.find("BİLGİSAYAR") + 30 + 2
+
     block = extracted_text[start_point:]
     end_point = block.find("\n")
     block = block[:end_point]
@@ -284,8 +343,9 @@ def read_keywords():
 
     start_point = extracted_text.find("Anahtar") + 19
     extracted_text = extracted_text[start_point:]
-    end_point = extracted_text.find("\n")
-    keywords_str = extracted_text[:end_point]
+    extracted_text = extracted_text.replace("\n", " ")
+    end_point = extracted_text.find("ABSTRACT")
+    keywords_str = extracted_text[:end_point -5]
 
     while keywords_str.find(",") != -1:
         point = keywords_str.find(",") + 2
